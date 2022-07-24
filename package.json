@@ -20,8 +20,6 @@
   "scripts": {
     "build": "rollup --config",
     "build:watch": "rollup --config --watch",
-    "test": "mocha test/**/*-test.js",
-    "test:watch": "mocha test/**/*-test.js --watch",
     "serve": "http-server",
     "dev": "yarn serve & yarn build:watch"
   },
