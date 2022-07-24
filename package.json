@@ -37,7 +37,7 @@
   "dependencies": {
     "lotivis-chart": "1",
     "lotivis-colors": "1",
-    "lotivis-csv": "^1.0.1",
+    "lotivis-csv": "1",
     "lotivis-datasets": "1"
   }
 }
