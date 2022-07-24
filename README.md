@@ -20,6 +20,10 @@ let datatextChart = lotivis.datatext();
 
 ### Content formats
 
+```js
+datatext.text(lotivis.datatextCSV);
+```
+
 #### lotivis.[datatextJSON](./src/datatext.js)
 Formats a JSON the data view object of the datatext.
 
@@ -56,7 +60,7 @@ Gets or sets the background color of the datatext.
 Gets or sets whether the datatext is enabled.
 
 #### datatext.[title](./src/datatext.js)(_)
-
+Gets or sets the title of the datatext.
 
 #### datatext.[text](./src/datatext.js)(_)
 

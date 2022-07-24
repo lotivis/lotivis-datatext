@@ -1,6 +1,5 @@
 import { csvRender } from "lotivis-csv";
 import { chart as baseChart, config } from "lotivis-chart";
-// import { downloadURL } from "../../lotivis-export/src/download.js";
 
 function postfix(src, post) {
   return (src = "" + src), src.endsWith(post || "") ? src : src + post;
@@ -10,40 +9,25 @@ function runsInBrowser() {
   return !(typeof document === "undefined");
 }
 
-/**
- * Returns the JSON string from the passed data view's data.
- * @param {datatext} dt The datatext
- * @param {dataview} dv The dataview
- * @returns {string} JSON string from the data view's data.
- */
+function downloadURL(url, fname) {
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = fname;
+  a.click();
+}
+
 export const datatextJSONData = function (dt, dv) {
   return JSON.stringify(dv.data, null, 2);
 };
 
-/**
- * Returns the JSON string from the passed data view.
- * @param {datatext} dt The datatext
- * @param {dataview} dv The dataview
- * @returns {string} JSON string from the data view.
- */
 export const datatextJSON = function (dt, dv) {
   return JSON.stringify(dv, null, 2);
 };
 
-/**
- * Returns the CSV string from the passed data view's data.
- * @param {datatext} dt The datatext
- * @param {dataview} dv The dataview
- * @returns CSV string from the data view's data.
- */
 export const datatextCSV = function (dt, dv) {
   return csvRender(dv.data);
 };
 
-/**
- *
- * @returns
- */
 export function datatext() {
   let text, cachedHTML;
   let attr = {
@@ -190,15 +174,6 @@ export function datatext() {
     return chart;
   };
 
-  // debug("datatext", chart.id());
-
   // return generated chart
   return chart;
-}
-
-function data_preview(dc) {
-  if (!dc || !config.debug || !runsInBrowser()) return;
-  if (!document.getElementById("ltv-data")) return;
-  if (!config.datatext) config.datatext = datatext().selector("#ltv-data");
-  config.datatext.dataController(dc).run();
 }

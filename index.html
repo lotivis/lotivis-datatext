@@ -29,10 +29,7 @@
     </div>
 
     <script src="../dist/lotivis-datatext.js"></script>
-
     <script>
-      console.log("lotivis", lotivis);
-
       let data = [
         {
           label: "dataset_1",
@@ -181,7 +178,7 @@
       let barChart = lotivis
         .datatext()
         .selector("#data-text")
-        // .text(lotivis.datatextJSONData)
+        .text(lotivis.datatextJSON)
         .title("json")
         .dataController(dc)
         .run();
