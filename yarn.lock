@@ -1735,7 +1735,7 @@ log-symbols@4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
-lotivis-chart@^1.0.11:
+lotivis-chart@1:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/lotivis-chart/-/lotivis-chart-1.0.11.tgz#9340c2d087b07dcb7065a828517bc3ad8d9373d3"
   integrity sha512-dyiAMYXMqcPk1Y1mTUYzPX+JpXVtpAxX3s9JlGqxIHWblJIhKYtSMURkTSyvArI2A53Yw5qgeHtNmgIrBPeELg==
