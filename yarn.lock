@@ -1753,10 +1753,10 @@ lotivis-colors@1:
     d3-scale "^4.0.2"
     d3-scale-chromatic "^3.0.0"
 
-lotivis-csv@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/lotivis-csv/-/lotivis-csv-1.0.1.tgz#321231d6746e815acf9152e31d2345f750b3fae9"
-  integrity sha512-8+Wp0ivBlDW820XOXErFj29OcqyNmR9jlGaCKZj98atbkTQuW+xS1Sf5TueT4QHCCXKt8vKDZEKwfOuJGyZ1JA==
+lotivis-csv@1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/lotivis-csv/-/lotivis-csv-1.0.2.tgz#8da20eedcc642eb7ff7b519f58158882966fd625"
+  integrity sha512-qcaL2OL0a8sDKpjX1C1Sd3fi775vgygBJgkmvRjciANB41p436Hue+/XrD2Y/9blv0hDvCln52mGmSl8BELdjA==
   dependencies:
     d3-dsv "^3.0.1"
 
