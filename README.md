@@ -1,4 +1,4 @@
-# lotivis-datatext
+# lotivis-datatext [![Node.js CI Build](https://github.com/lotivis/lotivis-datatext/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/lotivis/lotivis-datatext/actions/workflows/node.js.yml)
 
 The lotivis.js datatext chart.
 

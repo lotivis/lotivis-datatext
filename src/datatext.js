@@ -5,10 +5,6 @@ function postfix(src, post) {
   return (src = "" + src), src.endsWith(post || "") ? src : src + post;
 }
 
-function runsInBrowser() {
-  return !(typeof document === "undefined");
-}
-
 function downloadURL(url, fname) {
   let a = document.createElement("a");
   a.href = url;
