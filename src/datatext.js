@@ -1,6 +1,8 @@
 import { csvRender } from "lotivis-csv";
 import { chart as baseChart, config } from "lotivis-chart";
 
+var datatextIndex = 0;
+
 function postfix(src, post) {
   return (src = "" + src), src.endsWith(post || "") ? src : src + post;
 }
@@ -25,40 +27,39 @@ export const datatextCSV = function (dt, dv) {
 };
 
 export function datatext() {
-  let text, cachedHTML;
-  let attr = {
-    // the id of the datatext
-    id: "datatext-" + new Date().getTime(),
+  let cachedText,
+    cachedHTML,
+    attr = {
+      // the id of the datatext
+      id: "datatext-" + ++datatextIndex,
 
-    // max height
-    height: 800,
+      // max height
+      height: 800,
 
-    // margin
-    marginLeft: 0,
-    marginTop: 0,
-    marginRight: 0,
-    marginBottom: 0,
+      // margin
+      marginLeft: 0,
+      marginTop: 0,
+      marginRight: 0,
+      marginBottom: 0,
 
-    backgroundColor: null,
+      backgroundColor: null,
 
-    // whether the datatext is enabled
-    enabled: true,
+      // whether the datatext is enabled
+      enabled: true,
 
-    // (optional) title of the datatext
-    title: (dt, dv) => "Datatext",
+      // (optional) title of the datatext
+      title: (dt, dv) => "Datatext",
 
-    // the text to display for the data
-    text: datatextJSON,
+      // the text to display for the data
+      text: datatextJSON,
 
-    // the data controller
-    dataController: null,
-  };
+      // the data controller
+      dataController: null,
+    };
 
-  // expose attr
   let chart = baseChart(attr);
 
   // private
-
   function isType(obj, ...types) {
     return types.indexOf(typeof obj) !== -1;
   }
@@ -81,14 +82,47 @@ export function datatext() {
     return isType(value, "function") ? value(...args) : value;
   }
 
-  // public
+  function renderDivision(container, calc, dv) {
+    calc.div = container
+      .append("div")
+      .classed("ltv-datatext", true)
+      .attr("id", attr.id)
+      .style("background-color", attr.backgroundColor)
+      .style("padding-left", attr.marginLeft + "px")
+      .style("padding-top", attr.marginTop + "px")
+      .style("padding-right", attr.marginRight + "px")
+      .style("padding-bottom", attr.marginBottom + "px");
+  }
 
-  /**
-   * Initiates a download of the displayed text.
-   *
-   * @returns this The chart itself
-   * @public
-   */
+  function renderTitle(container, calc, dv) {
+    calc.title = calc.div
+      .append("div")
+      .classed("ltv-datatext-title", true)
+      .text(unwrap(attr.title, chart, dv))
+      .style("cursor", attr.enabled ? "pointer" : null)
+      .on("click", attr.enabled ? chart.download : null);
+  }
+
+  function renderPre(container, calc, dv) {
+    if (!cachedText || !cachedHTML) {
+      cachedText = unwrap(attr.text, chart, dv, attr.dataController);
+      cachedHTML = html(cachedText);
+    }
+
+    calc.pre = calc.div
+      .append("pre")
+      .classed("ltv-datatext-pre", true)
+      .attr("counter-reset", "line")
+      .html(cachedHTML);
+
+    if (isType(attr.height, "string", "number")) {
+      calc.pre
+        .style("height", postfix(attr.height, "px"))
+        .style("overflow", "scroll");
+    }
+  }
+
+  // public
   chart.download = function () {
     let type, extension;
 
@@ -103,7 +137,7 @@ export function datatext() {
       extension = "txt";
     }
 
-    let blob = new Blob([text], { type: type }),
+    let blob = new Blob([cachedText], { type: type }),
       objectURL = URL.createObjectURL(blob),
       filename = attr.dataController.filename(extension, "datatext");
 
@@ -128,48 +162,16 @@ export function datatext() {
   };
 
   chart.render = function (container, calc, dv) {
-    calc.div = container
-      .append("div")
-      .classed("ltv-datatext", true)
-      .attr("id", attr.id)
-      .style("background-color", attr.backgroundColor)
-      .style("padding-left", attr.marginLeft + "px")
-      .style("padding-top", attr.marginTop + "px")
-      .style("padding-right", attr.marginRight + "px")
-      .style("padding-bottom", attr.marginBottom + "px");
+    renderDivision(container, calc, dv);
 
     if (attr.title) {
-      calc.title = calc.div
-        .append("div")
-        .classed("ltv-datatext-title", true)
-        .text(unwrap(attr.title, chart, dv))
-        .style("cursor", attr.enabled ? "pointer" : null)
-        .on("click", attr.enabled ? chart.download : null);
+      renderTitle(container, calc, dv);
     }
 
-    if (!cachedHTML) {
-      text = unwrap(attr.text, chart, dv, attr.dataController);
-      cachedHTML = html(text);
-    }
-
-    calc.pre = calc.div
-      .append("pre")
-      .classed("ltv-datatext-pre", true)
-      .attr("counter-reset", "line")
-      // .attr("font-size", "10px")
-      // .attr("margin", "0")
-      // .attr("padding", "10px 0 0 0")
-      .html(cachedHTML);
-
-    if (isType(attr.height, "string", "number")) {
-      calc.pre
-        .style("height", postfix(attr.height, "px"))
-        .style("overflow", "scroll");
-    }
+    renderPre();
 
     return chart;
   };
 
-  // return generated chart
   return chart;
 }
